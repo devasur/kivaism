@@ -6,7 +6,8 @@
   <name>Client for Querying Kiva</name>
   <properties>
 		<junit.version>4.11</junit.version>
-		<spring.version>3.1.3.RELEASE</spring.version>      
+		<spring.version>3.1.3.RELEASE</spring.version>  
+		<jackson.version>2.1.1</jackson.version>    
   </properties>
   <dependencies>
   	<dependency>
@@ -16,14 +17,19 @@
   		<scope>test</scope>
   	</dependency>
   	<dependency>
-  		<groupId>org.springframework.data</groupId>
-  		<artifactId>spring-data-rest-webmvc</artifactId>
-  		<version>1.0.0.RELEASE</version>
-  	</dependency>
-  	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-webmvc</artifactId>
   		<version>${spring.version}</version>
   	</dependency>
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-core</artifactId>
+	  <version>${jackson.version}</version>
+	</dependency>  	
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-annotations</artifactId>
+	  <version>${jackson.version}</version>
+	</dependency>  	
   </dependencies>
 </project>
