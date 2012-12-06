@@ -17,6 +17,7 @@ public class TestKivaDataFetch {
 	private static final Log logger = LogFactory.getLog(TestKivaDataFetch.class);
 	@Test
 	public void testGetLatestLendersJson() throws Exception{
+		//System.setProperty("java.net.useSystemProxies", "true");
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> response = rt.getForEntity("http://api.kivaws.org/v1/lenders/newest.json", String.class, new HashMap<String, String>());
 		assertNotNull(response);

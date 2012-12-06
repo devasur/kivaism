@@ -9,6 +9,19 @@
 	<modules>
 		<module>kivaclient</module>
 	</modules>
+	<properties>
+		<junit.version>4.11</junit.version>
+		<spring.version>3.1.3.RELEASE</spring.version>
+		<jackson.version>2.1.1</jackson.version>
+	</properties>
+	<dependencies>
+	  	<dependency>
+	  		<groupId>junit</groupId>
+	  		<artifactId>junit</artifactId>
+	  		<version>${junit.version}</version>
+	  		<scope>test</scope>
+	  	</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -18,6 +31,16 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<systemPropertyVariables>
+					    <java.net.useSystemProxies>true</java.net.useSystemProxies>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -8,18 +8,7 @@
       <version>0.0.1-SNAPSHOT</version>
       <relativePath>../pom.xml</relativePath>
   </parent>
-  <properties>
-		<junit.version>4.11</junit.version>
-		<spring.version>3.1.3.RELEASE</spring.version>  
-		<jackson.version>2.1.1</jackson.version>    
-  </properties>
   <dependencies>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>${junit.version}</version>
-  		<scope>test</scope>
-  	</dependency>
   	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-webmvc</artifactId>
@@ -35,5 +24,10 @@
 	  <artifactId>jackson-annotations</artifactId>
 	  <version>${jackson.version}</version>
 	</dependency>  	
+	<dependency>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-databind</artifactId>
+	  <version>${jackson.version}</version>
+	</dependency>	
   </dependencies>
 </project>
