@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -130,6 +129,78 @@ public class TestKivaJsonXmls {
 			assertNotNull(b = aLoan.getBorrowers().get(0));
 			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
 		}
-			
+		
+		loandThroughClientApi = client.getLoans(
+				new ArrayList<String>(){
+					{
+						add("2933");
+					}
+				}
+		);
+		for (Loan aLoan : loandThroughClientApi){
+			Borrower b = null;
+			assertNotNull(b = aLoan.getBorrowers().get(0));
+			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
+		}		
+
+		loandThroughClientApi = client.getLoans(
+				new ArrayList<String>(){
+					{
+					}
+				}
+		);
+		for (Loan aLoan : loandThroughClientApi){
+			Borrower b = null;
+			assertNotNull(b = aLoan.getBorrowers().get(0));
+			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
+		}		
+
+		loandThroughClientApi = client.getLoans(
+				new ArrayList<String>(){
+					{
+						add("2930");
+						add("2931");
+						add("2932");
+						add("2932");
+						add("2932");
+						add("2932");
+						add("2930");
+						add("2931");
+						add("2932");
+						add("2932");
+						
+					}
+				}
+		);
+		for (Loan aLoan : loandThroughClientApi){
+			Borrower b = null;
+			assertNotNull(b = aLoan.getBorrowers().get(0));
+			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
+		}		
+
+		loandThroughClientApi = client.getLoans(
+				new ArrayList<String>(){
+					{
+						add("2930");
+						add("2931");
+						add("2932");
+						add("2932");
+						add("2932");
+						add("2932");
+						add("2930");
+						add("2931");
+						add("2932");
+						add("2932");
+						add("2932");
+						
+					}
+				}
+		);
+		for (Loan aLoan : loandThroughClientApi){
+			Borrower b = null;
+			assertNotNull(b = aLoan.getBorrowers().get(0));
+			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
+		}		
+		
 	}
 }
