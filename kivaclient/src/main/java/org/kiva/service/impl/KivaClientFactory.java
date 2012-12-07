@@ -1,14 +1,27 @@
 package org.kiva.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.kiva.domain.JournalEntry;
 import org.kiva.domain.Lender;
 import org.kiva.domain.Loan;
 import org.kiva.domain.LoanUpdate;
 import org.kiva.domain.SearchParameters;
+import org.kiva.error.KivaException;
 import org.kiva.service.ApiLevel;
+import org.kiva.service.Kiva;
 import org.kiva.service.KivaClient;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.common.collect.Lists;
 
 public class KivaClientFactory {
 	public static KivaClient getKivaClient(ApiLevel apiLevel) throws UnSupportedAPilevelException{
@@ -19,10 +32,26 @@ public class KivaClientFactory {
 }
 
 class KivaClientV1 implements KivaClient{
-
-	public List<Loan> getLoans(String[] loanIds) {
-		// TODO Auto-generated method stub
-		return null;
+	private static final Log logger = LogFactory.getLog(KivaClientV1.class);
+	private static final ObjectMapper mapper = new ObjectMapper();
+	public List<Loan> getLoans(List<String> ids) throws KivaException {
+		List<Loan> returnValue = new ArrayList<Loan>();
+		try {
+			List<List<String>> partitionedIds = Lists.partition(ids, 10);
+			for (List<String> onePartiiton : partitionedIds){
+				String idsJoined = StringUtils.join(onePartiiton, ",");
+				logger.debug("IDS:" + idsJoined + " Chunk Size:" + onePartiiton.size());
+				RestTemplate template = new RestTemplate();
+				String content = template.getForObject(Kiva.GET_LOANS_FOR_IDS, String.class,idsJoined);
+				JsonNode rootNode = mapper.readTree(content);
+				ArrayNode loans = (ArrayNode)rootNode.get("loans");
+				List<Loan> loansList = (List<Loan>)mapper.readValue(loans.toString(), new TypeReference<List<Loan>>(){});
+				returnValue.addAll(loansList);
+			}
+		} catch (Exception e) {
+			throw new KivaException(e.getMessage(), e);
+		}
+		return returnValue;
 	}
 
 	public List<JournalEntry> getJournalEntriesForLoan(String loanId) {
