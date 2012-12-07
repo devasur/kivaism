@@ -1,5 +1,6 @@
 package org.kiva.service;
 
 public enum ApiLevel {
-	V1
+	V1,
+	V2
 }

@@ -70,38 +70,6 @@ public class TestKivaJsonXmls {
 				add("2931");
 				add("2932");
 				add("2932");
-				add("2932");
-				add("2932");
-				add("2930");
-				add("2931");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2930");
-				add("2931");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2930");
-				add("2931");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2930");
-				add("2931");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2930");
-				add("2931");
-				add("2932");
-				add("2932");
-				add("2932");
-				add("2932");
 			}
 		};
 		List<List<String>> partitionedIds = Lists.partition(ids, 10);
@@ -130,6 +98,7 @@ public class TestKivaJsonXmls {
 			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
 		}
 		
+		//One Loan
 		loandThroughClientApi = client.getLoans(
 				new ArrayList<String>(){
 					{
@@ -137,24 +106,28 @@ public class TestKivaJsonXmls {
 					}
 				}
 		);
+		assertTrue(loandThroughClientApi.size() == 1);
 		for (Loan aLoan : loandThroughClientApi){
 			Borrower b = null;
 			assertNotNull(b = aLoan.getBorrowers().get(0));
 			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
 		}		
 
+		//Empty parameter List : Should not Crap
 		loandThroughClientApi = client.getLoans(
 				new ArrayList<String>(){
 					{
 					}
 				}
 		);
+		assertTrue(loandThroughClientApi.size() == 0);
 		for (Loan aLoan : loandThroughClientApi){
 			Borrower b = null;
 			assertNotNull(b = aLoan.getBorrowers().get(0));
 			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
 		}		
 
+		//Exactly 10 ids : The split limit.
 		loandThroughClientApi = client.getLoans(
 				new ArrayList<String>(){
 					{
@@ -172,12 +145,14 @@ public class TestKivaJsonXmls {
 					}
 				}
 		);
+		assertTrue(loandThroughClientApi.size() == 10);
 		for (Loan aLoan : loandThroughClientApi){
 			Borrower b = null;
 			assertNotNull(b = aLoan.getBorrowers().get(0));
 			logger.info("Borrower:" + b.getFirstName() + " " + b.getLastName());
 		}		
 
+		//11 ids, 10 + 1.
 		loandThroughClientApi = client.getLoans(
 				new ArrayList<String>(){
 					{
@@ -196,6 +171,7 @@ public class TestKivaJsonXmls {
 					}
 				}
 		);
+		assertTrue(loandThroughClientApi.size() == 11);
 		for (Loan aLoan : loandThroughClientApi){
 			Borrower b = null;
 			assertNotNull(b = aLoan.getBorrowers().get(0));
