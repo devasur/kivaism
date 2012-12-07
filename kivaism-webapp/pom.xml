@@ -6,15 +6,13 @@
         <groupId>org.boni.kiva</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <artifactId>kivaism-webapp</artifactId>
     <packaging>war</packaging>
-
     <name>kivaism-webapp</name>
-
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <gae.version>1.7.3</gae.version>
     </properties>
 
     <dependencies>
@@ -24,6 +22,11 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${gae.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -48,6 +51,19 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>net.kindleit</groupId>
+                <artifactId>maven-gae-plugin</artifactId>
+                <version>0.9.4</version>
+                <dependencies>
+                  <dependency>
+                    <groupId>net.kindleit</groupId>
+                    <artifactId>gae-runtime</artifactId>
+                    <version>${gae.version}</version>
+                    <type>pom</type>
+                  </dependency>
+                </dependencies>
+            </plugin>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
