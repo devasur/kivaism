@@ -1,6 +1,7 @@
 package org.kiva.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,29 +11,33 @@ import org.kiva.domain.JournalEntry;
 import org.kiva.domain.Lender;
 import org.kiva.domain.Loan;
 import org.kiva.domain.LoanUpdate;
+import org.kiva.domain.NewestLoan;
 import org.kiva.domain.SearchParameters;
 import org.kiva.error.KivaException;
 import org.kiva.service.ApiLevel;
 import org.kiva.service.Kiva;
 import org.kiva.service.KivaClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
 
 public class KivaClientFactory {
-	public static KivaClient getKivaClient(ApiLevel apiLevel) throws UnSupportedAPilevelException{
+	public static KivaClient getKivaClient(ApiLevel apiLevel){
 		if (apiLevel == ApiLevel.V1)
 			return new KivaClientV1();
-		throw new UnSupportedAPilevelException();
+		return null;
 	}
 }
 
 class KivaClientV1 implements KivaClient{
-	private static final Log logger = LogFactory.getLog(KivaClientV1.class);
+	private static final Logger logger = LoggerFactory.getLogger(KivaClientV1.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 	public List<Loan> getLoans(List<String> ids) throws KivaException {
 		List<Loan> returnValue = new ArrayList<Loan>();
@@ -69,9 +74,21 @@ class KivaClientV1 implements KivaClient{
 		return null;
 	}
 
-	public List<Loan> getNewestLoans() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NewestLoan> getNewestLoans() {
+		logger.debug("Invoked:getNewestLoans()");
+		try{
+			RestTemplate template = new RestTemplate();
+			String newestLoansContent = template.getForObject(Kiva.GET_NEWEST_LOANS, String.class);
+			logger.debug(newestLoansContent);
+			ObjectNode root = (ObjectNode )mapper.readTree(newestLoansContent);
+			ArrayNode loansArray = (ArrayNode)root.get("loans");
+			List<NewestLoan> loansList = (List<NewestLoan>)mapper.readValue(loansArray.toString(), new TypeReference<List<NewestLoan>>(){});
+			return loansList;
+		}
+		catch(Exception e){
+			logger.error(e.getMessage(), e);
+		}
+		return new ArrayList<NewestLoan>();
 	}
 
 	public List<Loan> searchLoans(SearchParameters parameters) {

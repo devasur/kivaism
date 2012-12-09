@@ -12,9 +12,4 @@ public class TestKivaClientDefaultImpl {
 	public void testKivaClient() throws Exception{
 		KivaClient client = KivaClientFactory.getKivaClient(ApiLevel.V1);
 	}
-	
-	@Test(expected=UnSupportedAPilevelException.class)
-	public void testUnimplementedApilevel() throws Exception{
-		KivaClientFactory.getKivaClient(ApiLevel.V2);
-	}
 }
