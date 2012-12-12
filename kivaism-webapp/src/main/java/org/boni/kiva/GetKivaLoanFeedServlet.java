@@ -1,15 +1,9 @@
 package org.boni.kiva;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +14,6 @@ import org.kiva.service.KivaClient;
 import org.kiva.service.impl.KivaClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.appengine.api.urlfetch.HTTPResponse;
-import com.google.appengine.api.urlfetch.URLFetchService;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 
 @SuppressWarnings("serial")
 public class GetKivaLoanFeedServlet extends HttpServlet {

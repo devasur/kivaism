@@ -19,6 +19,7 @@ import org.kiva.service.Kiva;
 import org.kiva.service.KivaClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -39,6 +40,13 @@ public class KivaClientFactory {
 class KivaClientV1 implements KivaClient{
 	private static final Logger logger = LoggerFactory.getLogger(KivaClientV1.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
+	@Override
+	public Loan getLoan(final String loanId) throws KivaException{
+		List<Loan> returnValue = getLoans(new ArrayList<String>(){{add(loanId);}});
+		if (null == returnValue || returnValue.isEmpty()) return null;
+		return returnValue.get(0);
+		
+	}
 	public List<Loan> getLoans(List<String> ids) throws KivaException {
 		List<Loan> returnValue = new ArrayList<Loan>();
 		try {
@@ -53,7 +61,11 @@ class KivaClientV1 implements KivaClient{
 				List<Loan> loansList = (List<Loan>)mapper.readValue(loans.toString(), new TypeReference<List<Loan>>(){});
 				returnValue.addAll(loansList);
 			}
-		} catch (Exception e) {
+		} 
+		catch(HttpClientErrorException e){
+			logger.error(e.getMessage());
+		}
+		catch (Exception e) {
 			throw new KivaException(e.getMessage(), e);
 		}
 		return returnValue;

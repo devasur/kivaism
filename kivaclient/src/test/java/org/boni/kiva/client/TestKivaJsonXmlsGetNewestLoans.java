@@ -46,12 +46,4 @@ public class TestKivaJsonXmlsGetNewestLoans {
 		}
 	}
 	
-	@Test
-	public void testKivaClient(){
-		List<NewestLoan> loans = client.getNewestLoans();
-		for (NewestLoan aLoan : loans){
-			logger.info("Borrower:" + aLoan.getName());
-		}
-	}
-	
 }
