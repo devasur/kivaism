@@ -24,10 +24,6 @@
         </activity>
         <activity
             android:name="org.boni.kivaism.DisplayMessageActivity"
-            android:label="@string/title_activity_display_message" >
-        </activity>
-        <activity
-            android:name="org.boni.kivaism.DisplayMessageActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName="org.boni.kivaism.SearchLoansActivity" >
             <meta-data
