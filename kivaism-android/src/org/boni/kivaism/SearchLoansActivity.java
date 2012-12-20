@@ -21,14 +21,5 @@ public class SearchLoansActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_loans);
 	}
-	
-	public void doSend(View view){
-		Intent intent = new Intent(this,DisplayMessageActivity.class); 
-		EditText editText = (EditText)findViewById(R.id.edit_message);
-		String message = editText.getText().toString();
-		intent.putExtra(SEARCH_LOANS_EXTRA_TEXT, message);
-		startActivity(intent);
-	}
-
 
 }
