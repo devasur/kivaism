@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<name>Kiva Parent Project</name>
 	<modules>
-		<module>kivaclient</module>
+	<module>kivaclient</module>
     <module>kivaism-webapp</module>
   </modules>
 	<properties>
